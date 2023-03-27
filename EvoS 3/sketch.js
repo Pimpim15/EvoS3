@@ -1,4 +1,4 @@
-/* VARI¡VEIS */
+/* VARI√ÅVEIS */
 let xCuba = 1500;
 let yCuba = 800;
 let xCanvas = 1700;
@@ -17,7 +17,8 @@ let foodDists = [];
 let creatureDists = [];
 let foodSize = [1, 10];
 let foodMaxEnergy = 50;
-let maxFoodIni = yCuba / 10;
+let maxFoodIni = yCuba / 20;
+let minFoodIni = yCuba / 40;
 let maxFood = maxFoodIni;
 let foodSpawn = maxFood / 40;
 let lastFood = maxFood - 1;
@@ -55,7 +56,9 @@ function draw() {
 
     if(foodList.length < maxFood && millis() % 1000)
     {
-        let qnt = maxFood - foodList.length > foodSpawn ? foodSpawn : maxFood - foodList.length;
+        let foodQnt = maxFood - foodList.length
+
+        let qnt = foodQnt > foodSpawn ? foodSpawn : foodQnt;
         
         let newFood = Food.foodChain(qnt, lastFood, xCuba,yCuba, foodSize, foodMaxEnergy);
 
@@ -123,11 +126,11 @@ function draw() {
 
     textSize(13);
     let txt = "Vivos: " + alive + " Mortos: " + dead;
-    txt += "        cruzamentos: " + mateTries + "/" + mates + "/" + genderMissMatch + "/" + notConscent + "/" + infertile + "        Divisıes: " + divides;
+    txt += "        cruzamentos: " + mateTries + "/" + mates + "/" + genderMissMatch + "/" + notConscent + "/" + infertile + "        Divis√µes: " + divides;
     txt += "        Lutas: " + fights + "/" + w + "/" + l + "/" + d;
-    txt += "        Nvl Med Evol: " + evolveLvl + "        Mais EvoluÌdo: " + mostEvolved.id + "/" + round(mostEvolved.evolved*100)/100;
+    txt += "        Nvl Med Evol: " + evolveLvl + "        Mais Evolu√≠do: " + mostEvolved.id + "/" + round(mostEvolved.evolved*100)/100;
 
-    maxFood = map(alive, qtdIA, 250, maxFoodIni, 0)
+    maxFood = map(alive, 1, 300, maxFoodIni, minFoodIni)
 
     fill(strapColor);
     rect(0, yCuba + 50, 2500, 50);
@@ -260,7 +263,7 @@ function moveCreature(crt, dcs)
         }
     }
 
-    let deltaEnergy = map(crt.color[0], 0, 255, crt.maxEnergy*0.005, crt.maxEnergy*0.0005);
+    let deltaEnergy = map(crt.color[0], 0, 255, crt.maxEnergy*0.00000001 , crt.maxEnergy*0.0007);
 
     if(moved)
         crt.energyChange(-deltaEnergy);
